@@ -19,7 +19,10 @@ app.use(cors({
 })); // enable CORS
 app.use(bodyParser.json()); // parse JSON bodies
 
-
+// home route
+app.get('/', (req, res) => {
+    res.send('Welcome to the Vibe Match API. Use the /api/get-similar-vibes endpoint to get similar vibes.');
+});
 // API endpoint to get similar vibes
 app.get('/api/get-similar-vibes', async (req, res) => {
     const { categoryActor, categoryActorName } = req.query;
