@@ -43,10 +43,16 @@ app.get('/api/get-similar-vibes', async (req, res) => {
         const moviesArray = list ? list.map(item => item.replace(/^\d+\.\s+/, '')) : []; // Convert to array
         res.json({ data: moviesArray }); // send the array as JSON
     } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: error.message });
+        // console.error("Error:", error);
+        // res.status(500).json({ error: error.message });
+        next(error);
     }
 });
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: "An unexpected error occurred"});
+})
 
 app.listen(PORT, '127.0.0.1', () => {
     console.log(`Server listening on port ${PORT}`);
