@@ -10,7 +10,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const app = express();
 const PORT = 5000;
-const allowedOrigins = ['http://localhost:9006/', 'https://vibe-match-ten.vercel.app/'];
+const allowedOrigins = ['http://localhost:9006', 'https://vibe-match-ten.vercel.app'];
 
 app.use(cors({
     origin: allowedOrigins,
