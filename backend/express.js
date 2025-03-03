@@ -10,10 +10,10 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const app = express();
 const PORT = 5000;
-const allowedOrigins = ['http://localhost:9006', 'https://vibe-match-ten.vercel.app'];
+// const allowedOrigins = ['http://localhost:9006', 'https://vibe-match-ten.vercel.app'];
 
 app.use(cors({
-    origin: allowedOrigins,
+    origin: '*',
     methods: 'GET',
     allowedHeaders: ['Content-Type', 'Authorization'],
 })); // enable CORS
@@ -43,7 +43,7 @@ app.get('/api/get-similar-vibes', async (req, res, next) => {
         const moviesArray = list ? list.map(item => item.replace(/^\d+\.\s+/, '')) : []; // Convert to array
         res.json({ data: moviesArray }); // send the array as JSON
     } catch (error) {
-        // console.error("Error:", error);
+        console.error("Error:", error);
         // res.status(500).json({ error: error.message });
         next(error);
     }
