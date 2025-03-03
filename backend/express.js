@@ -10,13 +10,24 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const app = express();
 const PORT = 5000;
+const allowedOrigins = ['http://localhost:9006/', 'https://vibe-match-ten.vercel.app/'];
 
-app.use(cors()); // enable CORS
+app.use(cors({
+    origin: allowedOrigins,
+    methods: 'GET',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+})); // enable CORS
 app.use(bodyParser.json()); // parse JSON bodies
 
+
 // API endpoint to get similar vibes
-app.post('/api/get-similar-vibes', async (req, res) => {
-    const { categoryActor, categoryActorName } = req.body;
+app.get('/api/get-similar-vibes', async (req, res) => {
+    const { categoryActor, categoryActorName } = req.query;
+
+    if (!categoryActor || !categoryActorName) {
+        res.status(400).json({ error: "Missing required query parameters" });
+        return;
+    }
     const apikey = process.env.GEMINI_API;
     const genAI = new GoogleGenerativeAI(apikey);
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash"});
