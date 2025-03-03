@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Vibe Match API. Use the /api/get-similar-vibes endpoint to get similar vibes.');
 });
 // API endpoint to get similar vibes
-app.get('/api/get-similar-vibes', async (req, res) => {
+app.get('/api/get-similar-vibes', async (req, res, next) => {
     const { categoryActor, categoryActorName } = req.query;
 
     if (!categoryActor || !categoryActorName) {
