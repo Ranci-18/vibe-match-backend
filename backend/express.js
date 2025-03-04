@@ -12,11 +12,17 @@ const app = express();
 const PORT = 5000;
 // const allowedOrigins = ['http://localhost:9006', 'https://vibe-match-ten.vercel.app'];
 
-app.use(cors({
+app.use(cors(/*{
     origin: '*',
     methods: 'GET',
     allowedHeaders: ['Content-Type', 'Authorization'],
-})); // enable CORS
+}*/)); // enable CORS
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
 app.use(bodyParser.json()); // parse JSON bodies
 
 // home route
@@ -49,10 +55,6 @@ app.get('/api/get-similar-vibes', async (req, res, next) => {
     }
 });
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: "An unexpected error occurred"});
-})
 
 app.listen(PORT, '127.0.0.1', () => {
     console.log(`Server listening on port ${PORT}`);
